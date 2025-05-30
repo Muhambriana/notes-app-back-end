@@ -13,6 +13,9 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
   "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "eslint": "^9.27.0",
+    "globals": "^16.2.0",
     "nodemon": "^3.1.10"
   }
 }
