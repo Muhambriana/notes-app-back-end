@@ -105,4 +105,35 @@ const editNoteByIdHandler = (request, h) => {
   return response;
 };
 
-module.exports = { addNoteHandler, getAllNotesHandler, getNoteByIdHandler, editNoteByIdHandler };
+const deleteNoteByIdHandler = (request, h) => {
+  const { id } = request.params;
+
+  const index = notes.findIndex((note) => note.id === id);
+
+  if (index === -1) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menghapus catatan. Id tidak ditemukan',
+    });
+
+    response.code(404);
+    return response;
+  }
+
+  notes.splice(index, 1);
+  const response = h.response({
+    status: 'success',
+    message: 'Catatan berhasil dihapus',
+  });
+
+  response.code(200);
+  return response;
+};
+
+module.exports = {
+  addNoteHandler,
+  getAllNotesHandler,
+  getNoteByIdHandler,
+  editNoteByIdHandler,
+  deleteNoteByIdHandler,
+};
