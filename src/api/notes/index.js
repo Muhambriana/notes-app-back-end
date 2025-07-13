@@ -1,7 +1,7 @@
 const NotesHandler = require('./handler');
 const routes = require('./routes');
 
-module.expoerts = {
+module.exports = {
   name: 'notes',
   version: '1.0.0',
   register: async (server, { service }) => {

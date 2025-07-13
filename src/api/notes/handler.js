@@ -3,7 +3,7 @@ class NotesHandler {
     this._service = service;
   }
 
-  postNotehandler(request, h) {
+  postNoteHandler(request, h) {
     try {
       const { title = ' untitled', body, tags } = request.payload;
 
