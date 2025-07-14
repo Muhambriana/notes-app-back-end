@@ -9,14 +9,15 @@ class NotesHandler {
 
       const noteId = this._service.addNote({ title, body, tags });
 
-      const response = {
+      const response = h.response({
         status: 'success',
         message: 'Catatan berhasil ditambahkan',
         data: {
           noteId,
         },
-      };
-      response.code = 201;
+      });
+
+      response.code(201);
       return response;
     } catch (error) {
       const response = h.response({
@@ -82,6 +83,7 @@ class NotesHandler {
     try {
       const { id } = request.params;
       this._service.deleteNoteById(id);
+
       return {
         status: 'success',
         message: 'Catatan berhasil dihapus',

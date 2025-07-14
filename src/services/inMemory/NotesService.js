@@ -55,8 +55,8 @@ class NotesService {
     };
   }
 
-  deleteNoteByIdHandler(id) {
-    const index = notes.findIndex((note) => note.id === id);
+  deleteNoteById(id) {
+    const index = this._notes.findIndex((note) => note.id === id);
 
     if (index === -1) {
       throw new Error('Catatan gagal dihapus. Id tidak ditemukan');
