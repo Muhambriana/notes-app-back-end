@@ -1,9 +1,9 @@
-const Joi = require('joi');
+import { object, string, array } from 'joi';
 
-const NotePayloadSchema = Joi.object({
-  title: Joi.string().required(),
-  body: Joi.string().required(),
-  tags: Joi.array().items(Joi.string()).required(),
+const NotePayloadSchema = object({
+  title: string().required(),
+  body: string().required(),
+  tags: array().items(string()).required(),
 });
 
-module.exports = { NotePayloadSchema };
+export default { NotePayloadSchema };
