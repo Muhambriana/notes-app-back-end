@@ -1,6 +1,6 @@
 import InvariantError from '../../exceptions/InvariantError';
-import default from './schema';
-const { NotePayloadSchema } = default;
+import schema from './schema';
+const { NotePayloadSchema } = schema;
 
 const NotesValidator =  {
   validateNotePayload: (payload) => {
