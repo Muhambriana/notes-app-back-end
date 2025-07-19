@@ -30,7 +30,7 @@ const up = (pgm) => {
       type: 'TEXT',
       notNull: true,
     },
-    update_at: {
+    updated_at: {
       type: 'TEXT',
       notNull: true,
     }
