@@ -1,10 +1,11 @@
 const { nanoid } = require('nanoid');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const InvariantError = require('../../exceptions/InvariantError');
+const { Pool } = require('pg');
 
 class NotesService {
   constructor() {
-    this._notes = [];
+    this._pool = new Pool();
   }
 
   addNote({ title, body, tags }) {
