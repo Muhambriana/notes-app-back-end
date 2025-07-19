@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid';
-import NotFoundError from '../../exceptions/NotFoundError';
-import InvariantError from '../../exceptions/InvariantError';
+const { nanoid } = require('nanoid');
+const NotFoundError = require('../../exceptions/NotFoundError');
+const InvariantError = require('../../exceptions/InvariantError');
 
 class NotesService {
   constructor() {
@@ -68,4 +68,4 @@ class NotesService {
   }
 }
 
-export default NotesService;
+module.exports = NotesService;
