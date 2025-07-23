@@ -39,4 +39,4 @@ const down = (pgm) => {
   pgm.dropTable('users');
 };
 
-module.exports = { up, down };
+module.exports = { up, down, shorthands };
