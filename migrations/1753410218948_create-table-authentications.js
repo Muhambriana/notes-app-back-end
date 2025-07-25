@@ -23,7 +23,7 @@ const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 const down = (pgm) => {
-pgm.dropTable('authentications');
+  pgm.dropTable('authentications');
 };
 
 module.exports = { shorthands, up, down };
