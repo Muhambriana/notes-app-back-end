@@ -2,7 +2,7 @@ const routes = (handler) => [
   {
     method: 'POST',
     path: '/collaborations',
-    handler: handler.postCollaborationhandler,
+    handler: handler.postCollaborationHandler,
     options: {
       auth: 'notesapp_jwt',
     },
