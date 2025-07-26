@@ -36,7 +36,11 @@ class NotesService {
 
   async getNotes(owner) {
     const query = {
-      text: 'SELECT * FROM notes WHERE owner = $1',
+      text: `SELECT n.* 
+      FROM notes n
+      LEFT JOIN collaborations c ON c.note_id = n.id 
+      WHERE n.owner = $1 OR c.user_id = $1
+      GROUP BY n.id`,
       values: [owner],
     };
 
