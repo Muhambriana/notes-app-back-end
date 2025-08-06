@@ -1,7 +1,7 @@
 const routes = (handler) => [
   {
     method: 'POST',
-    path: '/upload/images',
+    path: '/upload/image',
     handler: handler.postUploadImageHandler,
     options: {
       payload: {
