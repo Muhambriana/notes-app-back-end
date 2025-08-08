@@ -6,9 +6,10 @@ const { Pool } = require('pg');
 const { mapDBToModel } = require('../../utils');
 
 class NotesService {
-  constructor(collaborationService) {
+  constructor(collaborationService, cacheService) {
     this._pool = new Pool();
     this._collaborationService = collaborationService;
+    this._cacheService = cacheService;
   }
 
   async addNote(
@@ -35,17 +36,26 @@ class NotesService {
   }
 
   async getNotes(owner) {
-    const query = {
-      text: `SELECT n.* 
-      FROM notes n
-      LEFT JOIN collaborations c ON c.note_id = n.id 
-      WHERE n.owner = $1 OR c.user_id = $1
-      GROUP BY n.id`,
-      values: [owner],
-    };
+    try {
+      const result = await this._cacheService.get(`notes:${owner}`);
+      return JSON.parse(result);
+    } catch {
+      const query = {
+        text: `SELECT n.* 
+        FROM notes n
+        LEFT JOIN collaborations c ON c.note_id = n.id 
+        WHERE n.owner = $1 OR c.user_id = $1
+        GROUP BY n.id`,
+        values: [owner],
+      };
 
-    const result = await this._pool.query(query);
-    return result.rows.map(mapDBToModel);
+      const result = await this._pool.query(query);
+      const mappedResult = result.rows.map(mapDBToModel);
+
+      await this._cacheService.set(`notes:${owner}`);
+
+      return mappedResult;
+    }
   }
 
   async getNoteById(id) {
