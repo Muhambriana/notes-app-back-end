@@ -53,7 +53,7 @@ class NotesService {
       const result = await this._pool.query(query);
       const mappedResult = result.rows.map(mapDBToModel);
 
-      await this._cacheService.set(`notes:${owner}`);
+      await this._cacheService.set(`notes:${owner}`, JSON.stringify(mappedResult));
 
       return mappedResult;
     }
