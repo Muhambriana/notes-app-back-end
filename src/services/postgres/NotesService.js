@@ -32,6 +32,7 @@ class NotesService {
       throw new InvariantError('Catatan gagal ditambahkan');
     }
 
+    await this._cacheService.delete(`notes:${owner}`);
     return resultId;
   }
 
@@ -81,7 +82,7 @@ class NotesService {
     const updatedAt = new Date().toISOString();
 
     const query =  {
-      text: 'UPDATE notes SET title = $1, body = $2, tags = $3, updated_at = $4 WHERE id = $5 RETURNING id',
+      text: 'UPDATE notes SET title = $1, body = $2, tags = $3, updated_at = $4 WHERE id = $5 RETURNING id, owner',
       values: [title, body, tags, updatedAt, id],
     };
 
@@ -90,11 +91,14 @@ class NotesService {
     if (!result.rows.length) {
       throw new NotFoundError('Gagal memperbarui catatan. Id tidak ditemukan');
     }
+
+    const { owner } = result.rows[0];
+    await this._cacheService.delete(`notes:${owner}`);
   }
 
   async deleteNoteById(id) {
     const query = {
-      text: 'DELETE FROM notes  WHERE id = $1 RETURNING id',
+      text: 'DELETE FROM notes  WHERE id = $1 RETURNING id, owner',
       values: [id]
     };
 
@@ -102,6 +106,9 @@ class NotesService {
     if (!result.rows.length) {
       throw new NotFoundError('Catatan gagal dihapus. Id tidak ditemukan');
     }
+
+    const { owner } = result.rows[0];
+    await this._cacheService.delete(`notes:${owner}`);
   }
 
   async verifyNoteOwner(id, owner) {
